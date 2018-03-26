@@ -10,7 +10,40 @@ geometry: margin=1in
 documentclass: article
 ---
 
-The problem: In `GeneticData.txt` is some made up genetic data. Find all microsatellites. 
+# The problem
+
+In `GeneticData.txt` is some made up genetic data. Find all microsatellites. 
 For each one, find the start position and number of repeats. For our purposes, microsatellites 
 are 2-6 bases long. Carry out good code design and uit testing during the process.
+
+# Top-most design
+
+Starting from the top and not thinking at all yet about how we will accomplish it, we need a 
+function (call it, say, `find_microsats`, that takes the sequence (in some form yet to be determined), 
+as well as the size limits of the repeating sequence of bases to look for (2 to 6), as well as the 
+minimum number of repeats needed for it to be considered a microsatellite (30 above). So the function 
+first line `find_microsats<-function(seq,lenmin,lenmax,repmin)` seems to make sense. We need to decide 
+on a data structure for `seq`, so let's use a single R `character` variable. These can be large. See 
+below for a few points on how to manipulate these
+
+That function could call another one (call it `getseqs`), which will have an argument, `len`, for the length
+of the prospective microsatellite, and will find all possibilities. So, for instance, if you call it
+with `len=2` we should get AA, AC, AG, AT, CA, CC, CG, CT, GA, GC, GG, GT, TA, TC, TG, TT (this is already
+giving us some ideas for unit testing). `find_microsats` will call `getseqs` for all the lengths to be considered
+to get a list of what sequences to look for.
+
+We will also need a function (call it `find_repeat`) that takes a specific prospective microsatellite 
+(sequence of length 2-6) and looks for it in seq. So the function first line `find_repeat<-function(ms,seq,repmin)`
+makes sense. 
+
+Note that we have divided up the task into parts: one part that finds all the base sequences of lengths 2-6,
+and then another part that finds repeats of one of these. We still do not know how to accomplish these tasks. 
+
+We can 
+read the data in with `scan("GeneticData.txt",what=character())`, and then check you get a `character` of 
+length 36564 (use `nchar` to check the length) that begins with "TAAATGTACAAATGTTCTTATTGTGGCTTGTTAGGGACCAAGGTACATCG".
+Check out the function `substr`, which comes in handy. There are many tools for manipulating regular expressions
+(and, indeed, for doing all sorts of genetic analyses), we assuming, for the purpose of this exercise,
+we do not want to use those.
+
 
