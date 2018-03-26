@@ -10,3 +10,241 @@ geometry: margin=1in
 documentclass: article
 ---
 
+# Tests for find_fixed
+This is a low-level function, so let's start with it. 
+
+Test it can find one length-2 pattern by itself:
+
+```{r find_fixed_test_1, echo=T}
+ms<-"AT"
+seq<-"CGAAGGCTATAGA"
+h<-find_fixed(ms,seq)
+if (length(h)==1 && h==9)
+{
+  print("passed")
+} else
+{
+  print("failed")
+}
+```
+
+Test it can find a length-4 pattern by itself:
+
+```{r find_fixed_test_2, echo=T}
+ms<-"ATGG"
+seq<-"AGCTTATGGAAGGCC"
+h<-find_fixed(ms,seq)
+if (length(h)==1 && h==6)
+{
+  print("passed")
+} else
+{
+  print("failed")
+}
+```
+
+Test if output is appropriate if the pattern repeats:
+
+```{r find_fixed_test_3, echo=T}
+ms<-"AG"
+seq<-"TGACCAGAGAGATCCGGGG"
+h<-find_fixed(ms,seq)
+if (length(h)==3 && sum(h==c(6,8,10))==3)
+{
+  print("passed")
+} else
+{
+  print("failed")
+}
+```
+
+What if ms itself has a repeat?
+
+```{r find_fixed_test_4, echo=T}
+ms<-"AGAG"
+seq<-"ATGGCAACAGAGAGAGCCGTAGTC"
+h<-find_fixed(ms,seq)
+if (length(h)==3 && sum(h==c(9,11,13))==3)
+{
+  print("passed")
+} else
+{
+  print("failed")
+}
+```
+
+Note this helps us with our design - the output here is of length 3, whereas it
+would have been of length 2 for a non-repeating `ms`, and we will have to be aware 
+of this when writing `find_repeat`.
+
+# Tests for getseqs
+This is another low-level function, so let's continue with it next.
+
+We already thought of this one at the design stage:
+
+```{r getseqs_test_1, echo=T}
+h<-getseqs(2)
+if (length(h)==4^2 && sum(h==c("AA", "AC", "AG", "AT", "CA", "CC", "CG", "CT", "GA", "GC", "GG", "GT", "TA", "TC", "TG", "TT"))==4^2)
+{
+  print("passed")
+} else
+{
+  print("failed")
+}
+```
+
+Note we also realize something here of which we should remain aware: repeating patterns are included!
+
+Simple test for length-4 patterns, only tests the length because I do not want to type out all $4^4=256$ length-4 sequences:
+
+```{r getseqs_test_2, echo=T}
+h<-getseqs(4)
+if (length(h)==4^4)
+{
+  print("passed")
+} else
+{
+  print("failed")
+}
+```
+
+# Tests for find_repeat
+
+Test for one repeat of the target `ms` only: 
+
+```{r find_repeat_test_1, echo=T}
+ms<-"CG"
+seq<-"AATGGGCCACGCGCGCGCGCGCGCGCGCGCGACAATTCGCGCGCGGA"
+#Note this has CG occuring 4 times (which should be ignored) as well as 11 times
+repmin<-10  
+h<-find_repeat(ms,seq,repmin)
+#should be one row with 11 reps at start loc 10
+if(dim(h)[1]==1)
+{
+  print("passed")
+} else
+{
+  print("failed")
+}
+if (h[1,1]=="CG")
+{
+  print("passed")
+} else
+{
+  print("failed")
+}
+if (h[1,2]==10)
+{
+  print("passed")
+} else
+{
+  "failed"
+}
+if (h[1,3]==11)
+{
+  print("passed")
+} else
+{
+  "failed"
+}
+```
+
+Test for two repeats:
+
+```{r find_repeat_test_2, echo=T}
+ms<-"CG"
+seq<-"AATGGGCCACGCGCGCGCGCGCGCGCGCGCGACAATTCGCGCGCGGA"
+#Note this has CG occuring 4 times (which should be ignore) as well as 11 times
+repmin<-4  
+h<-find_repeat(ms,seq,repmin)
+#should be two rows, one with 11 reps at start loc 10, one with 4 reps at loc 38 
+if(dim(h)[1]==2)
+{
+  print("passed")
+} else
+{
+  print("failed")
+}
+if (h[1,1]=="CG" && h[2,1]=="CG")
+{
+  print("passed")
+} else
+{
+  print("failed")
+}
+if (h[1,2]==10)
+{
+  print("passed")
+} else
+{
+  "failed"
+}
+if (h[1,3]==11)
+{
+  print("passed")
+} else
+{
+  "failed"
+}
+if (h[2,2]==38)
+{
+  print("passed")
+} else
+{
+  "failed"
+}
+if (h[2,3]==4)
+{
+  print("passed")
+} else
+{
+  "failed"
+}
+```
+
+Test for the case of a `ms` that itself has repeats. This is a test written in response to something we realized 
+in our above unit testing. We will have to write the function to get this right.
+
+```{r find_repeat_test_3, echo=T}
+ms<-"AGAG"
+seq<-"TTAGAGAGAGAGAGAGAGAGAGTTACACT"
+repmin<-4
+h<-find_repeat(ms,seq,repmin)
+if(dim(h)[1]==1)
+{
+  print("passed")
+} else
+{
+  print("failed")
+}
+if (h[1,1]=="AGAG")
+{
+  print("passed")
+} else
+{
+  print("failed")
+}
+if (h[1,2]==3)
+{
+  print("passed")
+} else
+{
+  "failed"
+}
+if (h[1,3]==5)
+{
+  print("passed")
+} else
+{
+  "failed"
+}
+```
+
+# Tests for find_microsats
+
+Test for an example with various features but little else between the features:
+
+```{r }
+
+
+```
