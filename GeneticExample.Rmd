@@ -37,13 +37,30 @@ We will also need a function (call it `find_repeat`) that takes a specific prosp
 makes sense. 
 
 Note that we have divided up the task into parts: one part that finds all the base sequences of lengths 2-6,
-and then another part that finds repeats of one of these. We still do not know how to accomplish these tasks. 
+and then another part that finds whether there are repeats of one of these in our given sequence and how many and where. 
+We still do not know how to accomplish these tasks. 
 
 We can 
 read the data in with `scan("GeneticData.txt",what=character())`, and then check you get a `character` of 
 length 36564 (use `nchar` to check the length) that begins with "TAAATGTACAAATGTTCTTATTGTGGCTTGTTAGGGACCAAGGTACATCG".
 Check out the function `substr`, which comes in handy. There are many tools for manipulating regular expressions
-(and, indeed, for doing all sorts of genetic analyses), we assuming, for the purpose of this exercise,
+(and, indeed, for doing all sorts of genetic analyses), we are assuming, for the purpose of this exercise,
 we do not want to use those.
 
+# Next-level design
+
+So far we know we will have a function `find_microsats<-function(seq,lenmin,lenmax,repmin)` that will call 
+`getseqs<-function(len)` and also `find_repeat<-function(ms,seq,repmin)` to do its job, but we do not yet know
+how `find_repeat` is supposed to work. We just know finding whether a given prospective microsatellite actually
+occurs seems easier than finding all microsatellites, so we decided to accomplish the overall task by getting a 
+list of all sequences of length 2-6 and then looking for them each in turn. We still need to figure out 
+how to look for one of these (that's `find_repeat`). 
+
+How about if `find_repeat` calls a function, call it `find_fixed` that finds the locations of all exact matches
+of a given sequence? Perhaps `find_repeat` can then use that information to accomplish its goals. So we imagine 
+a function `find_fixed<-function(ms,seq)` that returns a vector with the start location of all instances
+of `ms` in `seq`. That should be straightforward, and it also seems clear that can be used to accomplish the larger
+goals of `find_repeat`.
+
+Having performed this top down design, we are now ready to write function specs.
 
