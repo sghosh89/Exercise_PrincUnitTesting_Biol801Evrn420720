@@ -1,0 +1,16 @@
+---
+title: "Biol 801/Evrn 420/720, Example of unit testing using fake genetic data"
+date: "March 2018"
+output: 
+  pdf_document:
+    highlight: tango
+fontsize: 11pt
+geometry: margin=1in
+
+documentclass: article
+---
+
+The problem: In `GeneticData.txt` is some made up genetic data. Find all microsatellites. 
+For each one, find the start position and number of repeats. For our purposes, microsatellites 
+are 2-6 bases long. Carry out good code design and uit testing during the process.
+

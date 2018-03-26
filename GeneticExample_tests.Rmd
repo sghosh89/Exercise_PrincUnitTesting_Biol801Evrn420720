@@ -1,0 +1,12 @@
+---
+title: "Biol 801/Evrn 420/720, Example of unit testing using fake genetic data, unit tests"
+date: "March 2018"
+output: 
+  pdf_document:
+    highlight: tango
+fontsize: 11pt
+geometry: margin=1in
+
+documentclass: article
+---
+
