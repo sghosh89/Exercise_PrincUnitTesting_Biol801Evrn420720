@@ -14,6 +14,30 @@
 find_repeat<-function(ms,seq,repmin)
 {
   #call find_fixed
+  locs<-find_fixed(ms,seq)
   
   #use the output of find_fixed to find the repeats
+  ncms<-nchar(ms)
+  res<-data.frame(microsat=character(),loc=integer(),numrep=integer(),stringsAsFactors = F)
+  while (length(locs>0))
+  {
+    #gets the number of repeats
+    numrep<-1
+    while ((locs[1]+numrep*ncms) %in% locs)
+    {
+      numrep<-numrep+1
+    }
+    
+    #store the info
+    dr1<-dim(res)[1]
+    res[dr1+1,1]<-ms
+    res[dr1+1,2:3]<-c(locs[1],numrep)
+    
+    #throw away the part of locs you have been over
+    locs<-locs[locs>=locs[1]+numrep*ncms]
+  }
+  
+  res<-res[res$numrep>=repmin,]
+  
+  return(res)
 }
