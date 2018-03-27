@@ -92,6 +92,8 @@ The microsats are as follows:
 res
 ```
 
+Note that each microsatellite appears together with its shifts.
+
 # Discussion
 
 We found `em. The use of unit testing was an up-front investment, but it made the process of writing the code and being relatively sure it works quite quick and easy.
