@@ -62,5 +62,7 @@ a function `find_fixed<-function(ms,seq)` that returns a vector with the start l
 of `ms` in `seq`. That should be straightforward, and it also seems clear that can be used to accomplish the larger
 goals of `find_repeat`.
 
-Having performed this top down design, we are now ready to write function specs.
+# Function specs, then unit tests, then functions themselves, then run the tests.
+
+Having performed this top down design (above), we were then ready to write function specs. This was done (see the `.R` files). Having spec'd the functions, we were then ready to write the unit tests. This was done (see `GeneticExample_tests.Rmd`). Having written the unit tests, we were then ready to write the code.
 
