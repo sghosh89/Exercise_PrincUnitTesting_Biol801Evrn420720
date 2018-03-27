@@ -10,11 +10,16 @@ geometry: margin=1in
 documentclass: article
 ---
 
+```{r general_setup, echo=F}
+source("mtime.R") #A function for cache management
+```
+
 # The problem
 
 In `GeneticData.txt` is some made up genetic data. Find all microsatellites. 
 For each one, find the start position and number of repeats. For our purposes, microsatellites 
-are 2-6 bases long. Carry out good code design and uit testing during the process.
+are 2-6 bases long and involve at least 30 repeats. Carry out good code design and unit testing 
+during the process.
 
 # Top-most design
 
@@ -64,5 +69,29 @@ goals of `find_repeat`.
 
 # Function specs, then unit tests, then functions themselves, then run the tests.
 
-Having performed this top down design (above), we were then ready to write function specs. This was done (see the `.R` files). Having spec'd the functions, we were then ready to write the unit tests. This was done (see `GeneticExample_tests.Rmd`). Having written the unit tests, we were then ready to write the code.
+Having performed this top down design (above), we were then ready to write function specs. This was done (see the `.R` files). Having spec'd the functions, we were then ready to write the unit tests. This was done (see `GeneticExample_tests.Rmd`). Having written the unit tests, we were then ready to write the code. This was done. After some debugging, all tests passed.
 
+# Methods
+
+Easy at this point, we just run this code:
+
+```{r analyze_data, echo=T,cache=T, cache.extra=list(mtime("GeneticData.txt"),mtime("find_fixed.R"),mtime("find_microsats.R"),mtime("find_repeat.R"),mtime("getseqs.R"))}
+dat<-scan("GeneticData.txt",what=character())
+source("getseqs.R")
+source("find_fixed.R")
+source("find_repeat.R")
+source("find_microsats.R")
+res<-find_microsats(seq=dat,lenmin=2,lenmax=6,repmin=30)
+```
+
+# Results
+
+The microsats are as follows:
+
+```{r echo=F}
+res
+```
+
+# Discussion
+
+We found `em. The use of unit testing was an up-front investment, but it made the process of writing the code and being relatively sure it works quite quick and easy.
