@@ -31,6 +31,7 @@ find_microsats<-function(seq,lenmin,lenmax,repmin)
   {
     res<-rbind(res,find_repeat(potms[counter],seq,repmin))
   }
+  rownames(res)<-NULL
   
   return(res)
 }

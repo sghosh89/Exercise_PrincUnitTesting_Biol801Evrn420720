@@ -95,3 +95,5 @@ res
 # Discussion
 
 We found `em. The use of unit testing was an up-front investment, but it made the process of writing the code and being relatively sure it works quite quick and easy.
+
+Note: I have nominally written this document using introductory material, Methods, Results, and Discussion, but it does not quite fit because this is a demo of a coding design technique, not a scientific paper. When you do your homework, all the unit testing aspects should be parallel to what I have done here, but since your homework will also be presenting your proposal for a final project, it will fit better in the style of a scientific paper.  

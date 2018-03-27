@@ -294,6 +294,7 @@ seq<-paste0("T", #pos 1
             "AAAAAAAA", #pos 48 to 55, 4 reps of AA,  
             "TTA")
 h<-find_microsats(seq=seq,lenmin=2,lenmax=6,repmin=4)
+h
 ```
 
 The result should show:  
