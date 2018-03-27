@@ -287,7 +287,7 @@ Test for an example with various features but little else between the features:
 seq<-paste0("T", #pos 1
             "AGAGAGAG", #pos 2 to 9, 4 reps of AG, 3 reps of GA
             "T", #pos 10
-            "CATCATCATCATCAT", #pos 11 to 25, 5 reps of CAT, 4 reps of ATC, 4 reps of TCA
+            "CATCATCATCATCAT", #pos 11 to 25, 5 reps of CAT, 5 reps of ATC, 5 reps of TCA
             "CTT", #pos 26 to 28
             "AGAGAGAGAGAGAGAG", #pos 29 to 44, 8 reps of AG, 8 reps of GA (including subsequent A)
             "ATC", #pos 45 to 47
@@ -296,12 +296,16 @@ seq<-paste0("T", #pos 1
 h<-find_microsats(seq=seq,lenmin=2,lenmax=6,repmin=4)
 ```
 
-The result should show:
+The result should show:  
+
 - 4 reps of "AG" starting at pos 2
 - 5 reps of "CAT" starting at pos 11
-- 4 reps of "ATC" starting at 12
-- 4 reps of "TCA" starting at 13
+- 5 reps of "ATC" starting at 12
+- 5 reps of "TCA" starting at 10
 - 8 reps of "AG" starting at pos 29
 - 8 reps of "GA" starting at pos 30
 - 4 reps of "AA" starting at pos 48
+- 4 reps of "AGAG" starting at pos 29
+- 4 reps of "GAGA" starting at pos 30
+
 I don't care what order these appear in.
