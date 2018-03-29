@@ -47,3 +47,33 @@ getseqs<-function(len)
   }
   return(res)
 }
+
+#y1<-getseqs(2)
+
+# Input and Outputs are in same format as of getseqs function
+my_getseqs<-function(len){
+  
+  bp_list<-vector("list",length = len) # create an empty list
+  bp<-c("A","C","G","T")
+  
+  for(i in c(1:len)){
+   bp_list[[i]]<-bp
+  }
+  
+  x<-expand.grid(bp_list)
+  
+  res<-apply( x[,1:len] , 1, paste , collapse = "" )
+  
+  return(res)
+  
+}
+
+
+#my_getseqs(4)
+
+
+
+
+
+
+
