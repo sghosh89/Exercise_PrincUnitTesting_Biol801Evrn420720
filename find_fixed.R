@@ -25,3 +25,19 @@ find_fixed<-function(ms,seq)
   
   return(res)
 }
+
+#find_fixed("AG","TCAGCTAGTagAG")
+
+
+#alternatively use: gregexpr(ms,seq)
+
+my_find_fixed<-function(ms,seq){
+  match<-gregexpr(ms,seq)
+  return(unlist(match)) # start position index of each occurence
+}
+
+#match<-gregexpr("AG","TAGAGTCAGCCTAGag")
+#unlist(match) # start position index of each occurence
+#nrep<-length(unlist(match))
+#nrep # number of occurence
+
