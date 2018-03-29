@@ -82,6 +82,30 @@ Note this helps us with our design - the output here is of length 3, whereas it
 would have been of length 2 for a non-repeating `ms`, and we will have to be aware 
 of this when writing `find_repeat`.
 
+# Tests for my_find_fixed functioin from find_fixed.R file
+
+```{r my_find_fixed_test1}
+ms<-"AG"
+seq<-"TAGAGTCAGCCTAGag"
+h<-my_find_fixed(ms=ms,seq=seq)
+if(length(h)==4 && all(h==c(2,4,8,13))==T){
+  print("my_find_fixed_test1 : passed")
+}else{
+  print("my_find_fixed_test1 : failed")
+}
+```
+
+```{r my_find_fixed_test2}
+ms<-"AGAG" # What if ms itself has a repeat?
+seq<-"TAGAGTCAGCCTAGagAGAGTCAGAG"
+h<-my_find_fixed(ms=ms,seq=seq)
+if(length(h)==3 && all(h==c(2,17,23))==T){
+  print("my_find_fixed_test2 : passed")
+}else{
+  print("my_find_fixed_test2 : failed")
+}
+```
+
 # Tests for getseqs
 
 ```{r getseqs_source, echo=T}
