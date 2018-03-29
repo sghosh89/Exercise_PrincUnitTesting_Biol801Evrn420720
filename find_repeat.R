@@ -41,3 +41,50 @@ find_repeat<-function(ms,seq,repmin)
   
   return(res)
 }
+
+
+#find_repeat("AG","TAGAGAGTAGCAGAGCTTTTACAGAT",2)
+#find_fixed("AG","AGTAGCAGAGCTTTTACAGAT")
+
+
+#alternatively,
+
+my_find_repeat<-function(ms,seq,repmin){
+  
+  temp<-my_find_fixed(ms,seq)
+  ncms<-nchar(ms)
+  
+  if(temp[1]!=-1){
+    
+    ms_rep<-rep(ms,repmin)
+    ms_repmin<-paste(ms_rep, collapse = "")
+    startpos<-my_find_fixed(ms_repmin,seq)
+    
+    numrep<-c()
+    for(i in 1:length(startpos)){
+      
+      #gets the number of repeats
+      num_rep<-1
+      while ((startpos[i]+num_rep*ncms) %in% temp){
+        num_rep<-num_rep+1
+      }
+      
+      numrep[i]<-num_rep
+      
+    }
+    
+  }else{
+    startpos<-NA   # no matching pattern found
+    numrep<-NA
+  }
+  
+  return(data.frame(ms=ms,
+                    loc=startpos,
+                    numrep=numrep))
+}
+
+#my_find_repeat(ms="AG",seq="TAGAGAGTAGCAGAGCTTTTACAGAT",repmin=2)
+
+
+
+
