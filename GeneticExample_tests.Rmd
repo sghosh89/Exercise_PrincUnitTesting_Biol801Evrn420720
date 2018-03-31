@@ -334,3 +334,32 @@ The result should show:
 - 4 reps of "GAGA" starting at pos 30
 
 I don't care what order these appear in.
+
+
+We should get the abovesaid result if my written function is correct. To test that:
+```{r }
+seq<-paste0("T", #pos 1
+            "AGAGAGAG", #pos 2 to 9, 4 reps of AG, 3 reps of GA
+            "T", #pos 10
+            "CATCATCATCATCAT", #pos 11 to 25, 5 reps of CAT, 5 reps of ATC, 5 reps of TCA
+            "CTT", #pos 26 to 28
+            "AGAGAGAGAGAGAGAG", #pos 29 to 44, 8 reps of AG, 8 reps of GA (including subsequent A)
+            "ATC", #pos 45 to 47
+            "AAAAAAAA", #pos 48 to 55, 4 reps of AA,  
+            "TTA")
+h<-my_find_microsats(seq=seq,lenmin=2,lenmax=6,repmin=4) # it's a data-frame
+h_mat<-as.matrix(h)
+h_mat <- h_mat[order(h_mat[,1]),] # it's a matrix now : sorted as alphabetically ms in 1st column
+h_mat
+```
+
+
+
+
+
+
+
+
+
+
+
