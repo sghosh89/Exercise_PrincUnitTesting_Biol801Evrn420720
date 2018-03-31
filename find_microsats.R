@@ -35,3 +35,26 @@ find_microsats<-function(seq,lenmin,lenmax,repmin)
   
   return(res)
 }
+
+
+#------------------------------------------------------------------
+my_find_microsats<-function(seq,lenmin,lenmax,repmin){
+  #for each length from lenmin to lenmax, get a vector of all sequences of that length and
+  #then combine them into one big vector of sequences, call it potms
+  potms<-c()
+  for (len in lenmin:lenmax){
+    potms<-c(potms,my_getseqs(len))  
+  }
+  
+  #call find_repeat above with each element of potms, combining results
+  res<-data.frame(microsat=character(),loc=integer(),numrep=integer(),stringsAsFactors = F)
+  for (counter in 1:length(potms)){
+    res<-rbind(res,my_find_repeat(potms[counter],seq,repmin))
+  }
+ 
+  res<-na.omit(res)
+  rownames(res)<-NULL
+  
+  return(res)
+}
+

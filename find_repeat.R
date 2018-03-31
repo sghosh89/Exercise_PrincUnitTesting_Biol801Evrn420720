@@ -51,36 +51,27 @@ find_repeat<-function(ms,seq,repmin)
 
 my_find_repeat<-function(ms,seq,repmin){
   
-  temp<-my_find_fixed(ms,seq)
+  z<-my_find_fixed(ms,seq)
   ncms<-nchar(ms)
   
-  if(temp[1]!=-1){
-    
-    ms_rep<-rep(ms,repmin)
-    ms_repmin<-paste(ms_rep, collapse = "")
-    startpos<-my_find_fixed(ms_repmin,seq)
-    
+  if(z[1]!=-1){
+    s<-split(z, cumsum(c(1, diff(z) != ncms)))
+    loc<-c()
     numrep<-c()
-    for(i in 1:length(startpos)){
-      
-      #gets the number of repeats
-      num_rep<-1
-      while ((startpos[i]+num_rep*ncms) %in% temp){
-        num_rep<-num_rep+1
-      }
-      
-      numrep[i]<-num_rep
-      
+    for(i in 1:length(s)){
+      temploc<-s[[i]][1]
+      tempnumrep<-length(s[[i]])
+      loc<-c(loc,temploc)
+      numrep<-c(numrep,tempnumrep)
     }
+    res<-data.frame(ms=ms,loc=loc,numrep=numrep)
+    res<-res[res$numrep>=repmin,]
     
   }else{
-    startpos<-NA   # no matching pattern found
-    numrep<-NA
+    res<-data.frame(ms=ms,loc=NA,numrep=NA)
   }
   
-  return(data.frame(ms=ms,
-                    loc=startpos,
-                    numrep=numrep))
+  return(res)
 }
 
 #my_find_repeat(ms="AG",seq="TAGAGAGTAGCAGAGCTTTTACAGAT",repmin=2)
